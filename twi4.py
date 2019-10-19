@@ -69,11 +69,11 @@ def download_chapters(output_dir, pages, start=0, end=None, verbose=False):
         fname = os.path.join(output_dir, fname)
         if os.path.isfile(fname):
             if verbose:
-                print("{} already downloaded, skipping...".format(fname))
+                print("{} already downloaded, skipping...".format(page["title"]))
             continue
 
         if verbose:
-            print("Downloading {}".format(fname))
+            print("Downloading {}".format(page["title"]))
 
         r = requests.get(page["url"])
         if r.status_code != 200:
