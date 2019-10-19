@@ -1,3 +1,6 @@
-fushigineko/
+comics/
+cache/
 
 .*.swp
+venv/
+*.pyc
