@@ -13,18 +13,18 @@ pip install -r requirements.txt
 - download all chapters:
 
 ```
-./main.py comic [--verbose]
+./main.py download comic [--verbose]
 ```
 
 - download last chapter:
 
 ```
-./main.py comic --start -1 [--verbose]
+./main.py download comic --start -1 [--verbose]
 ```
 
 - download a range of  chapters:
 
 ```
-./main.py comic --start x --end y [--verbose]
+./main.py download comic --start x --end y [--verbose]
 ```
 

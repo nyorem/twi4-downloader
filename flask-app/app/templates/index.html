@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+    </head>
+    <body>
+        <ul>
+        {% for comic in comics %}
+            <li><a href="{{ comic.last }}">{{ comic.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </body>
+</html>

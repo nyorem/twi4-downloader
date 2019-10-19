@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <title>{{ comic }} - {{ title }}</title>
+        <style>
+#chapter {
+    height: 100%;
+    text-align: center;
+}
+
+#footer {
+    text-align: center;
+}
+        </style>
+    </head>
+    <body>
+        <p>
+            Current: {{ current_chapter }} / {{ total_chapters }}
+        </p>
+
+        <div id="chapter">
+            <img src="{{ url }}"/>
+        </div>
+
+        <div id="footer">
+            <a href="/">Home</a>
+        </div>
+
+        <script>
+            $("body").keydown(function(e) {
+                if (e.keyCode == 37) { // left
+                    {% if previous_chapter is not none %}
+                    window.location.href = "{{ previous_chapter }}";
+                    {% endif %}
+                } else if (e.keyCode == 39) { // right
+                    {% if next_chapter is not none %}
+                    window.location.href = "{{ next_chapter }}";
+                    {% endif %}
+                }
+            })
+        </script>
+    </body>
+</html>
