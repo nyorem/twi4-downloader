@@ -8,8 +8,9 @@ pip install -r requirements.txt
 
 ## Usage
 
-First dump the comics information:
+First dump the comics information, then run the app:
 
 ```
-./main.py dump [comic]
+../main.py dump [comic]
+./run.sh
 ```

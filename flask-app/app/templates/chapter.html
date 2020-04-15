@@ -3,11 +3,23 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <title>{{ comic }} - {{ title }}</title>
         <style>
+body {
+    margin: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+#title {
+    padding-top: 10px;
+    text-align: center;
+}
+
 #chapter {
-    height: 100%;
     text-align: center;
 }
 
@@ -17,28 +29,74 @@
         </style>
     </head>
     <body>
-        <p>
-            Current: {{ current_chapter }} / {{ total_chapters }}
-        </p>
+        <div class="container">
+            <div id="title">
+                <h2>{{ title }}</h2>
+                <p class="current">
+                    Current: {{ current_chapter }} / {{ total_chapters }}
+                </p>
+            </div>
 
-        <div id="chapter">
-            <img src="{{ url }}"/>
-        </div>
+            <div id="chapter">
+                <img src="{{ url }}"/>
+            </div>
 
-        <div id="footer">
-            <a href="/">Home</a>
+            <div id="footer">
+                <a href="/">Home</a>
+            </div>
         </div>
 
         <script>
-            $("body").keydown(function(e) {
-                if (e.keyCode == 37) { // left
-                    {% if previous_chapter is not none %}
-                    window.location.href = "{{ previous_chapter }}";
-                    {% endif %}
-                } else if (e.keyCode == 39) { // right
-                    {% if next_chapter is not none %}
-                    window.location.href = "{{ next_chapter }}";
-                    {% endif %}
+            let previous_url = null;
+            {% if previous_chapter is not none %}
+            previous_url = "/api{{ previous_chapter }}";
+            {% endif %}
+
+            let next_url = null;
+            {% if next_chapter is not none %}
+            next_url = "/api{{ next_chapter }}";
+            {% endif %}
+
+            function getPage(isPrevious) {
+                let url = isPrevious ? previous_url : next_url;
+
+                if (url === null) {
+                    return;
+                }
+
+                fetch(url)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(page => {
+                        // Update title
+                        document.title = `{{ comic }} - ${page.title}`;
+                        const titleHeading = document.querySelector("#title h2");
+                        titleHeading.textContent = page.title;
+                        const titleP = document.querySelector("#title .current");
+                        titleP.textContent = `Current: ${page.current_number} / {{ total_chapters }}`;
+
+                        // Update img
+                        const img = document.querySelector("#chapter img");
+                        img.src = page.url;
+
+                        // Update history
+                        history.pushState(null, "", `/${page.comic}/${page.current}/`);
+
+                        // Update URLs
+                        previous_url = page.previous;
+                        next_url = page.next;
+                    })
+                    .catch(err => {
+                        console.log("error", err);
+                    });
+            }
+
+            document.body.addEventListener("keydown", function(e) {
+                if (e.key === "ArrowLeft") {
+                    getPage(true);
+                } else if (e.key === "ArrowRight") {
+                    getPage(false);
                 }
             })
         </script>

@@ -6,10 +6,13 @@
         <title>Index</title>
     </head>
     <body>
-        <ul>
-        {% for comic in comics %}
-            <li><a href="{{ comic.last }}">{{ comic.title }}</a></li>
-        {% endfor %}
-        </ul>
+        <div>
+            <h2>List of available comics:</h2>
+            <ul>
+            {% for comic in comics %}
+                <li><a href="{{ comic.last }}">{{ comic.title }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
     </body>
 </html>

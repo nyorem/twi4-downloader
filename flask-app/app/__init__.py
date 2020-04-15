@@ -64,34 +64,35 @@ def chapter(comic, page):
     abort(404)
 
 # Chapter as a REST endpoint.
-# TODO: AJAX request to this endpoint.
-# @app.route("/api/<string:comic>/<string:page>/")
-# def chapter_api(comic, page):
-#     if comic not in COMICS.keys():
-#         return jsonify({
-#             "success": False,
-#         }), 400
+@app.route("/api/<string:comic>/<string:page>/")
+def chapter_api(comic, page):
+    if comic not in COMICS.keys():
+        return jsonify({
+            "success": False,
+        }), 400
 
-#     pages  = COMICS[comic]
-#     npages = len(pages)
+    pages  = COMICS[comic]
+    npages = len(pages)
 
-#     for p in pages:
-#         if p["idx"] == page:
-#             idx   = int(p["idx"])
-#             title = p["title"]
-#             url   = p["url"]
+    for p in pages:
+        if p["idx"] == page:
+            idx   = int(p["idx"])
+            title = p["title"]
+            url   = p["url"]
 
-#             next_idx     = "/api/{}/{}/".format(comic, pad_index(idx + 1)) if idx < npages else None
-#             previous_idx = "/api/{}/{}/".format(comic, pad_index(idx - 1)) if idx > 1 else None
+            next_idx     = "/api/{}/{}/".format(comic, pad_index(idx + 1)) if idx < npages else None
+            previous_idx = "/api/{}/{}/".format(comic, pad_index(idx - 1)) if idx > 1 else None
 
-#             return jsonify({
-#                 "comic"   : comic,
-#                 "title"   : title,
-#                 "url"     : url,
-#                 "next"    : next_idx,
-#                 "previous": previous_idx,
-#             }), 200
+            return jsonify({
+                "comic"          : comic,
+                "current"        : p["idx"],
+                "current_number" : idx,
+                "title"          : title,
+                "url"            : url,
+                "next"           : next_idx,
+                "previous"       : previous_idx,
+            }), 200
 
-#     return jsonify({
-#         "success": False,
-#     }), 400
+    return jsonify({
+        "success": False,
+    }), 400
