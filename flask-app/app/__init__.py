@@ -4,7 +4,8 @@ from flask import Flask, render_template, abort, jsonify
 import pickle
 import os
 COMICS = {}
-COMICS_DIR = "../comics"
+COMICS_DIR = os.getenv("COMICS_DIR", "../comics")
+assert os.path.isdir(COMICS_DIR)
 for fname in os.listdir(COMICS_DIR):
     if "pkl" not in fname:
         continue
