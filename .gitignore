@@ -1,5 +1,6 @@
 comics/
 cache/
+heroku-app/
 
 .*.swp
 venv/

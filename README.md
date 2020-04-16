@@ -28,3 +28,7 @@ pip install -r requirements.txt
 ./main.py download comic --start x --end y [--verbose]
 ```
 
+## Web app
+
+A simple web application made using Flask can be found in the `flask-app` directory. A live version can be found [here](https://twi4-reader.herokuapp.com/) (the updates are not automatic and thus the most recent chapters may not be present).
+
