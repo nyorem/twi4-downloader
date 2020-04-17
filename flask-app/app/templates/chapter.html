@@ -10,17 +10,23 @@ body {
 }
 
 .container {
-    width: 80%;
+    width: 100%;
     margin: auto;
 }
 
 #title {
-    padding-top: 10px;
     text-align: center;
+    padding-top: 10px;
 }
 
 #chapter {
     text-align: center;
+}
+
+@media(max-width: 768px) {
+    #chapter img {
+        width: 90%;
+    }
 }
 
 #footer {
@@ -33,7 +39,7 @@ body {
             <div id="title">
                 <h2>{{ title }}</h2>
                 <p class="current">
-                    Current: {{ current_chapter }} / {{ total_chapters }}
+                    Chapter: {{ current_chapter }} / {{ total_chapters }}
                 </p>
             </div>
 
@@ -45,6 +51,8 @@ body {
                 <a href="/">Home</a>
             </div>
         </div>
+
+        <script src="{{ url_for('static', filename='swipe.js') }}"></script>
 
         <script>
             let previous_url = null;
@@ -92,7 +100,13 @@ body {
                     });
             }
 
-            document.body.addEventListener("keydown", function(e) {
+            // Handle mobile touch events
+            const swiper = new Swipe(document.body);
+            swiper.onLeft(() => getPage(false));
+            swiper.onRight(() => getPage(true));
+            swiper.run();
+
+            document.body.addEventListener("keydown", (e) => {
                 if (e.key === "ArrowLeft") {
                     getPage(true);
                 } else if (e.key === "ArrowRight") {
