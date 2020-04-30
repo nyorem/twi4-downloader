@@ -50,6 +50,7 @@ def chapter(comic, page):
             title = p["title"]
             url   = p["url"]
 
+            current_idx  = pad_index(idx)
             next_idx     = "/{}/{}/".format(comic, pad_index(idx + 1)) if idx < npages else None
             previous_idx = "/{}/{}/".format(comic, pad_index(idx - 1)) if idx > 1 else None
 
@@ -57,6 +58,7 @@ def chapter(comic, page):
                                    comic=comic,
                                    title=title,
                                    url=url,
+                                   current_idx=current_idx,
                                    current_chapter=idx,
                                    total_chapters=npages,
                                    next_chapter=next_idx,

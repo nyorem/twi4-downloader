@@ -10,9 +10,19 @@
             <h2>List of available comics:</h2>
             <ul>
             {% for comic in comics %}
-                <li><a href="{{ comic.last }}">{{ comic.title }}</a></li>
+                <li><a href="{{ comic.last }}">{{ comic.title }}</a>, <a href="#" onclick="goToLastRead('{{ comic.title }}')">last read</a></li>
             {% endfor %}
             </ul>
         </div>
+
+        <script>
+            function goToLastRead(comic)  {
+                const comics = JSON.parse(localStorage.getItem("comics"))
+                if (comics !== null) {
+                    const lastRead = comics[comic];
+                    window.location.href = `/${comic}/${lastRead}`;
+                }
+            }
+        </script>
     </body>
 </html>

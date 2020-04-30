@@ -65,6 +65,8 @@ body {
             next_url = "/api{{ next_chapter }}";
             {% endif %}
 
+            updateLocalStorage("{{ current_idx }}");
+
             function getPage(isPrevious) {
                 let url = isPrevious ? previous_url : next_url;
 
@@ -94,10 +96,22 @@ body {
                         // Update URLs
                         previous_url = page.previous;
                         next_url = page.next;
+
+                        // Update local storage
+                        updateLocalStorage(page.current);
                     })
                     .catch(err => {
                         console.log("error", err);
                     });
+            }
+
+            function updateLocalStorage(page_number) {
+                let comics = JSON.parse(localStorage.getItem("comics"));
+                if (comics === null) {
+                    comics = {}
+                }
+                comics["{{ comic }}"] = page_number;
+                localStorage.setItem("comics", JSON.stringify(comics));
             }
 
             // Handle mobile touch events
