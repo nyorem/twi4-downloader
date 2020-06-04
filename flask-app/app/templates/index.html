@@ -20,7 +20,9 @@
                 const comics = JSON.parse(localStorage.getItem("comics"))
                 if (comics !== null) {
                     const lastRead = comics[comic];
-                    window.location.href = `/${comic}/${lastRead}`;
+                    if (lastRead) {
+                        window.location.href = `/${comic}/${lastRead}`;
+                    }
                 }
             }
         </script>
